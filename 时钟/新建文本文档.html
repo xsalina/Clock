@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+          margin: 0;
+          padding: 0;
+        }
+        #box{
+            width:350px;
+            margin: auto;
+        }
+    
+        ul {
+          overflow: hidden;
+          height: 61px;
+          margin: 100px auto;
+        }
+    
+        ul>li {
+    
+          list-style: none;
+          float: left;
+          width: 41px;
+          height: 122px;
+          text-align: center;
+          background: pink;
+        }
+      </style>
+</head>
+<body>
+    <div id="box">
+        <ul>
+          <li class="list">
+            <img class="time" src="images/0.png" alt="">
+            <img class="sub" src="images/1.png" alt="">
+          </li>
+          <li class="list">
+            <img class="time" src="images/0.png" alt="">
+            <img class="sub" src="images/0.png" alt="">
+          </li>
+          <li>
+            <img src="images/d.png" alt="">
+          </li>
+          <li class="list">
+            <img class="time" src="images/0.png" alt="">
+            <img class="sub" src="images/0.png" alt="">
+          </li>
+          <li class="list">
+            <img class="time" src="images/0.png" alt="">
+            <img class="sub" src="images/0.png" alt="">
+          </li>
+          <li>
+            <img src="images/d.png" alt="">
+          </li>
+          <li class="list">
+            <img class="time" src="images/0.png" alt="">
+            <img class="sub" src="images/0.png" alt="">
+          </li>
+          <li class="list">
+            <img class="time" src="images/0.png" alt="">
+            <img class="sub" src="images/0.png" alt="">
+          </li>
+        </ul>
+    </div>
+    <script src="moveTimes.js"></script>
+    <script>
+    const   oList = document.getElementsByClassName("list"),
+            oTime = document.getElementsByClassName("time"),
+            oSub = document.getElementsByClassName("sub"),
+            len = oTime.length;
+            
+            for(let i=0; i<len; i++){
+                //给时间加自定义属性，好让她跟时间字符串作比较
+                oTime[i].num = 0;
+            }
+          fn = () =>{
+                //获取当前时间为字符串   
+                const   datestr = new Date().toTimeString().slice(0,8).split(":").join("");
+                  
+                for(let i=0; i<len; i++){
+                   // 如果当前时间字符串下标跟时间的下标相等的话，continue
+                    if(datestr[i] === oTime[i].num) continue;
+                    //下标先改变路径为时间字符串下标的数字
+                    oSub[i].src = `images/${datestr[i]}.png`;
+                    //时间的自定义属性跟着改，方便下次的时候作比较
+                    oTime[i].num = datestr[i];
+                    //调用动画，.7秒钟
+                    Move(oList[i],{"margin-top":-65},700,() =>{
+                        //运动结束之后，把时间的图片改到相应时间以改变路径
+                        oTime[i].src = `images/${datestr[i]}.png`;
+                        //移上去的图片在动画结束之后立马回来。
+                        oList[i].style.marginTop = 0;
+                        
+                    });
+                    
+
+                   
+                }
+            }
+         setInterval(fn,1000);
+    </script>
+</body>
+</html>
